@@ -1,0 +1,16 @@
+FROM ioft/armhf-ubuntu:wily
+
+RUN apt-get update &&\
+    apt-get -y upgrade &&\
+    apt-get -y install wget build-essential &&\
+    wget -O /tmp/rust-beta.tar.gz https://sothr.com/RustBuild/armv7/rust/beta/latest &&\
+    wget -O /tmp/cargo-beta.tar.gz https://sothr.com/RustBuild/armv7/cargo/beta/latest &&\
+    wget -O /tmp/librust-beta.tar.gz https://sothr.com/RustBuild/armv7/rustlib/beta/latest &&\
+    tar xvzf /tmp/rust-beta.tar.gz -C /usr &&\
+    tar xvzf /tmp/cargo-beta.tar.gz -C /usr &&\
+    tar xvzf /tmp/librust-beta.tar.gz -C /usr &&\
+    rm -f /tmp/*.tar.gz &&\
+    apt-get clean &&\
+    rm -rfv /usr/share/doc &&\
+    rm -rfv /var/cache/apt /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
