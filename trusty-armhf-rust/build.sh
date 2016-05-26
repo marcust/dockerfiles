@@ -6,10 +6,10 @@ SCRIPT_DIR=$(dirname $0)
 
 cd ${SCRIPT_DIR};
 
-NAME=marcust/trusty-armhf-rust
+NAME=marcust/$(basename $(pwd))
 
-for build in stable beta nightly; do
-    docker build --no-cache --pull -f Dockerfile.${build} -t ${NAME}:${build} .;
+for build in nightly beta stable; do
+    docker build --no-cache --pull --build-arg RUST_BUILD=${build} -f Dockerfile -t ${NAME}:${build} .;
     docker push ${NAME}:${build};
     VERSION=$(docker run ${NAME}:${build} /usr/bin/rustc -V  | cut -d ' ' -f 2)
     docker tag -f ${NAME}:${build} ${NAME}:${VERSION};
