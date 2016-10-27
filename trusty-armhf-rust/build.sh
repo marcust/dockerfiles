@@ -12,9 +12,9 @@ for build in nightly beta stable; do
     docker build --no-cache --pull --build-arg RUST_BUILD=${build} -f Dockerfile -t ${NAME}:${build} .;
     docker push ${NAME}:${build};
     VERSION=$(docker run ${NAME}:${build} rustc -V  | cut -d ' ' -f 2)
-    docker tag -f ${NAME}:${build} ${NAME}:${VERSION};
+    docker tag ${NAME}:${build} ${NAME}:${VERSION};
     docker push ${NAME}:${VERSION}
-    docker tag -f ${NAME}:${VERSION} ${NAME}:latest;
+    docker tag ${NAME}:${VERSION} ${NAME}:latest;
     docker push ${NAME}:latest
 done
 
